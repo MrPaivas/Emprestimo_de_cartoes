@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estacionamento Anhanguera</title>
+    <link rel="stylesheet" href="./static/style.css">
+</head>
+<body>
+    <div class="cartoes">
+        <table>
+            <thead>
+                <tr>
+                    <th>Número do cartão</th>
+                    <th>Situação</th>
+                    <th>Usuário</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cartao in cartoes %}
+                <tr>
+                    <td>{{cartao.numero}}</td>
+                    <td>{{cartao.situacao}}</td>
+                    <td>{{cartao.usuario}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="emprest">
+        <h3>Emprestar</h3>
+        <form action="/emprestar" method="POST">
+            <label>Número do Cartão:</label>
+            <br>
+            <input type="number" name="numero">
+            <br>
+            <label>Para quem é o Cartão:</label>
+            <br>
+            <input type="text" name="usuario">
+            <br>
+            <button type="submit">Emprestar</button>
+        </form>
+    </div>
+    <div class="devolucao">
+        <h3>Devolver</h3>
+        <form action="/devolver" method="POST">
+            <label>Número do Cartão</label>
+            <br>
+            <input type="number" name="numero">
+            <br>
+            <button type="submit">Devolver</button>
+        </form>
+    </div>
+    <div class="add_cartao">
+        <h3>Adicionar Cartão</h3>
+        <form action="/adicionar" method="POST">
+            <label>Número do Cartão</label>
+            <br>
+            <input type="number" name="numero">
+            <br>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+</body>
+
+</html>

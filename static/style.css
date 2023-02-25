@@ -1,0 +1,39 @@
+
+body{
+    background-color: #DCDCDC;
+    font-family: Arial, sans-serif; 
+}
+.cartoes{
+    border: 1px solid black;
+    position: relative;
+    width: 100%;
+    max-height: 522px;
+    overflow-y: auto;
+}
+
+.emprest{
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.devolucao{
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.add_cartao{
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
