@@ -1,12 +1,26 @@
 from flask import Flask, request, render_template, redirect, make_response
-from cartoes import db_cartoes
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+mysqlconnector://root:@localhost/python_estacionamento"
+db = SQLAlchemy(app)
+
+class Cartoes(db.Model):
+    idcartoes = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    situacao = db.Column(db.String(45), nullable=False)
+    usuario = db.Column(db.String(100), nullable=False)
+    colaborador = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return '<Cartoes %r>' % self.usuario
+
+
 
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', cartoes=db_cartoes)
+    busca = Cartoes.query.order_by(Cartoes.idcartoes)
+    return render_template('index.html', cartoes=busca)
 
 
 @app.route('/emprestar', methods=['POST'])
@@ -40,4 +54,4 @@ def adicionar_cartao():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.1.8', port=8080)
+    app.run(debug=True, host='10.151.22.169', port=8080)
