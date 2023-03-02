@@ -14,14 +14,18 @@
                     <th>Número do cartão</th>
                     <th>Situação</th>
                     <th>Usuário</th>
+                    <th>Colaborador</th>
+                    <th>Dia do Emprestimo</th>
                 </tr>
             </thead>
             <tbody>
                 {% for cartao in cartoes %}
                 <tr>
-                    <td>{{cartao.numero}}</td>
+                    <td>{{cartao.idcartoes}}</td>
                     <td>{{cartao.situacao}}</td>
-                    <td>{{cartao.usuario}}</td>
+                    <td>{{cartao.usuarios}}</td>
+                    <td>{{cartao.colaborador}}</td>
+                    <td>{{cartao.dia}}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -32,21 +36,22 @@
         <form action="/emprestar" method="POST">
             <label>Número do Cartão:</label>
             <br>
-            <input type="number" name="numero">
+            <input type="number" name="numero" required>
             <br>
-            <label>Para quem é o Cartão:</label>
+            <label>Para quem é o Cartão?</label>
             <br>
-            <input type="text" name="usuario">
+            <input type="text" name="usuario" required>
             <br>
             <button type="submit">Emprestar</button>
         </form>
     </div>
     <div class="devolucao">
         <h3>Devolver</h3>
+
         <form action="/devolver" method="POST">
             <label>Número do Cartão</label>
             <br>
-            <input type="number" name="numero">
+            <input type="number" name="numero" required>
             <br>
             <button type="submit">Devolver</button>
         </form>
@@ -56,11 +61,12 @@
         <form action="/adicionar" method="POST">
             <label>Número do Cartão</label>
             <br>
-            <input type="number" name="numero">
+            <input type="number" name="numero" required>
             <br>
             <button type="submit">Adicionar</button>
         </form>
     </div>
+    <a href="/logout"> Sair </a>
 </body>
 
 </html>

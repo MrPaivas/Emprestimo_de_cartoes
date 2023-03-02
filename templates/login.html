@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estacionamento Anhanguera</title>
+    <link rel="stylesheet" href="./static/style.css">
+</head>
+<body>
+    <div class="login">
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul id="messages" class="list-unstyled">
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/autentica" method="POST">
+            <label>Usuario</label>
+            <br>
+            <input type="text" name="login" required>
+            <br>
+            <label>Senha</label>
+            <br>
+            <input type="password" name="senha" required>
+            <br>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>

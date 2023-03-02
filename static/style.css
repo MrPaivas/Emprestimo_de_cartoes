@@ -1,39 +1,113 @@
+@media only screen and (max-width: 768px) {
 
-body{
-    background-color: #DCDCDC;
-    font-family: Arial, sans-serif; 
-}
-.cartoes{
-    border: 1px solid black;
-    position: relative;
-    width: 100%;
-    max-height: 522px;
-    overflow-y: auto;
-}
+  /* Estilo para o formulário de login */
+  .login {
+    width: 80%;
+    margin: 0 auto;
+  }
 
-.emprest{
-    border: 1px solid black;
-    width: 100%;
-    height: auto;
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+  /* Estilo para o formulário de empréstimo */
+  .emprest, .devolucao, .add_cartao {
+    width: 80%;
+    margin: 20px auto;
+  }
 
-.devolucao{
-    border: 1px solid black;
+  /* Estilo para a tabela de cartões */
+  .cartoes {
     width: 100%;
-    height: auto;
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    overflow-x: scroll;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+  }
 }
 
-.add_cartao{
-    border: 1px solid black;
-    width: 100%;
-    height: auto;
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
+/* Estilo para telas maiores */
+@media only screen and (min-width: 769px) {
+
+  /* Estilo para o formulário de login */
+  .login {
+    width: 40%;
+    margin: 0 auto;
+  }
+
+  /* Estilo para o formulário de empréstimo */
+ .emprest, .devolucao, .add_cartao {
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+}
+
+  /* Estilo para a tabela de cartões */
+  .cartoes {
+    width: 60%;
+    margin: 20px auto;
+  }
+}
+
+/* Estilo geral */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f5f5f5;
+  margin: 0;
+}
+
+h3 {
+  margin: 10px 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
 }
