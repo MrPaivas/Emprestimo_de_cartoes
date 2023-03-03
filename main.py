@@ -76,11 +76,15 @@ def emprestar():
     data_formatada = data_hora.strftime("%d/%m/%Y %H:%M:%S")
 
     acha_cartao = cursor.query(Cartoes).filter_by(idcartoes=numero).first()
-    acha_cartao.usuarios = usuario
-    acha_cartao.situacao = "Emprestado"
-    acha_cartao.colaborador = session['user']
-    acha_cartao.dia = data_formatada
-    cursor.commit()
+    if acha_cartao.situacao == "Disponível":
+        acha_cartao.usuarios = usuario
+        acha_cartao.situacao = "Emprestado"
+        acha_cartao.colaborador = session['user']
+        acha_cartao.dia = data_formatada
+        cursor.commit()
+        flash("Cartão emprestado com sucesso!")
+    else:
+        flash("Cartão já emprestado! Por favor escolha outro cartão!")
 
     return redirect('/home')
 
@@ -90,13 +94,17 @@ def emprestar():
 def devolver():
     cursor = db.session()
     numero = request.form['numero']
-
     acha_cartao = cursor.query(Cartoes).filter_by(idcartoes=numero).first()
-    acha_cartao.usuarios = ""
-    acha_cartao.situacao = "Disponível"
-    acha_cartao.colaborador = ""
-    acha_cartao.dia = ""
-    cursor.commit()
+
+    if acha_cartao.situacao == "Emprestado":
+        acha_cartao.usuarios = ""
+        acha_cartao.situacao = "Disponível"
+        acha_cartao.colaborador = ""
+        acha_cartao.dia = ""
+        cursor.commit()
+        flash("Cartão Devolvido com sucesso!")
+    else:
+        flash("O cartão não consta como Emprestado!")
 
     return redirect('/home')
 
@@ -119,4 +127,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.1.10', port=5000)
+    app.run(debug=True)
