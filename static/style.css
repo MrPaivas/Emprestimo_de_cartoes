@@ -7,7 +7,7 @@
   }
 
   /* Estilo para o formulário de empréstimo */
-  .emprest, .devolucao, .add_cartao {
+  .emprest, .devolucao, .add_cartao, .baixa_log {
     width: 80%;
     margin: 20px auto;
   }
@@ -34,7 +34,7 @@
   }
 
   /* Estilo para o formulário de empréstimo */
- .emprest, .devolucao, .add_cartao {
+ .emprest, .devolucao, .add_cartao, .baixa_log {
   margin: 0 auto;
   width: 80%;
   text-align: center;
