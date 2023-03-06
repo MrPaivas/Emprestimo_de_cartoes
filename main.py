@@ -92,19 +92,22 @@ def emprestar():
     data_formatada = data_hora.strftime("%d/%m/%Y %H:%M:%S")
 
     acha_cartao = cursor.query(Cartoes).filter_by(idcartoes=numero).first()
-    if acha_cartao.situacao == "Disponível":
-        acha_cartao.usuarios = usuario
-        acha_cartao.situacao = "Emprestado"
-        acha_cartao.colaborador = session['user']
-        acha_cartao.dia = data_formatada
+    try:
+        if acha_cartao.situacao == "Disponível":
+            acha_cartao.usuarios = usuario
+            acha_cartao.situacao = "Emprestado"
+            acha_cartao.colaborador = session['user']
+            acha_cartao.dia = data_formatada
 
-        salva_logs = Logs(numero_cartao=numero, usuario=usuario, data_emprest=data_formatada,
-                          colaborador_empresti=session['user'], data_devol="", colaborador_devol ="")
-        cursor.add(salva_logs)
-        cursor.commit()
-        flash("Cartão emprestado com sucesso!")
-    else:
-        flash("Cartão já emprestado! Por favor escolha outro cartão!")
+            salva_logs = Logs(numero_cartao=numero, usuario=usuario, data_emprest=data_formatada,
+                            colaborador_empresti=session['user'], data_devol="", colaborador_devol="")
+            cursor.add(salva_logs)
+            cursor.commit()
+            flash("Cartão emprestado com sucesso!")
+        else:
+            flash("Cartão já emprestado! Por favor escolha outro cartão!")
+    except:
+        flash("Cartao nao existe")
 
     return redirect('/home')
 
@@ -158,27 +161,47 @@ def logout():
 
 @app.route('/download', methods=['GET'])
 def baixar():
-    # Executa uma consulta para buscar todos os registros da tabela
-    data = Logs.query.all().statement
 
-    # Converte a lista de objetos em uma consulta SQL
-    statement = db.session.query(Logs).statement
+    buscas = Logs.query.order_by(Logs.idlogs)
 
-    # Converte os resultados em um DataFrame do Pandas
-    df = pd.read_sql(statement, db.session.bind)
+    num_empres = []
+    num_cartao = []
+    num_user = []
+    data_emp = []
+    cola_emp = []
+    data_dev = []
+    cola_dev = []
 
-    # Salva os dados em um objeto StringIO em memória
-    output = io.StringIO()
+    for busca in buscas:
+        num_empres.append(busca.idlogs)
+        num_cartao.append(busca.numero_cartao)
+        num_user.append(busca.usuario)
+        data_emp.append(busca.data_emprest)
+        cola_emp.append(busca.colaborador_empresti)
+        data_dev.append(busca.data_devol)
+        cola_dev.append(busca.colaborador_devol)
+
+    df = pd.DataFrame({
+        'Número do Emprestimo': num_empres,
+        'Número do Cartão': num_cartao,
+        'Usuário': num_user,
+        'Data do Emprestimo': data_emp,
+        'Colaborador que Emprestou': cola_emp,
+        'Data da Devolução': data_dev,
+        'Colaborador que Devolveu': cola_dev})
+
+
+    output = io.BytesIO()
     df.to_excel(output, index=False)
     output.seek(0)
 
-    # Cria uma resposta HTTP com o arquivo Excel
+
     response = make_response(output.getvalue())
-    response.headers["Content-Disposition"] = "attachment; filename=data.xlsx"
+    response.headers["Content-Disposition"] = "attachment; filename=historico_emprestimos.xlsx"
     response.headers["Content-type"] = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
     return response
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='10.151.22.169', port=5000)
+    app.run(debug=True)
