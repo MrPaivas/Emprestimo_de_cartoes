@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://colorlib.com/etc/tb/Table_Responsive_v1/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Table V01</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" type="image/png" href="https://colorlib.com/etc/tb/Table_Responsive_v1/images/icons/favicon.ico">
+<link rel="stylesheet" type="text/css" href="./static/css/main.css">
+<body>
+<div class="limiter">
+<div class="container-table100">
+<div class="wrap-table100">
+<div class="table100">
+<table>
+<thead>
+<tr class="table100-head">
+<th class="column1">Cartão</th>
+<th class="column2">Situação</th>
+<th class="column3">Usuário</th>
+<th class="column4">Colaborador</th>
+<th class="column5">Dia do Emprestimo</th>
+</tr>
+</thead>
+<tbody>
+{% for cartao in cartoes %}
+    <tr>
+        <td>{{cartao.idcartoes}}</td>
+        {% if cartao.situacao == 'Emprestado'%}
+        <td style="color: red">{{cartao.situacao}}</td>
+        {% else %}
+        <td style="color: green">{{cartao.situacao}}</td>
+        {% endif %}
+        <td>{{cartao.usuarios}}</td>
+        <td>{{cartao.colaborador}}</td>
+        <td>{{cartao.dia}}</td>
+    </tr>
+{%endfor%}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</body>
+</html>
