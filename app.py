@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from config.config import Config, db
 
@@ -27,8 +28,4 @@ app.register_blueprint(route_logout)
 app.register_blueprint(route_pass)
 
 if __name__ == "__main__":
-    app.run(
-        host='192.168.1.25',
-        port=443,  # Porta padrão HTTPS é 443
-        ssl_context=('./cert/cert.pem', './cert/key.pem')  # Certificado e chave privada
-    )
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
