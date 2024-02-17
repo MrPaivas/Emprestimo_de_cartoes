@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://colorlib.com/etc/tb/Table_Responsive_v1/images/icons/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./static/css/main.css">
+    <title>Estacionamento Anhanguera</title>
+</head>
+<body>
+    <a href="/logout" class="logout"><b> Sair </b></a>
+    <a href="/troca-senha" class="troca_senha"><b>Trocar de Senha</b></a>
+    <a href="/home" class="troca_senha"><b>Emprestar Cartões</b></a>
+
+        
+    
+        <div class="limiter">
+        <div class="container-table100">
+        <div class="wrap-table100">
+        <div class="table100">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+            {% endwith %}
+        <table>
+        <thead>
+        <tr class="table100-head">
+        <th class="column1">Item ID</th>
+        <th class="column2">Item Nome</th>
+        <th class="column3">Situação</th>
+        <th class="column4">Usuário</th>
+        <th class="column5">Colaborador</th>
+        <th class="column5">Dia do Emprestimo</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for kit in kits %}
+            <tr>
+                <td>{{kit.item_id}}</td>
+                <td>{{kit.item_name}}</td>
+                {% if kit.situacao == 'Emprestado'%}
+                <td style="color: red">{{kit.situacao}}</td>
+                {% else %}
+                <td style="color: green">{{kit.situacao}}</td>
+                {% endif %}
+                <td>{{kit.usuarios}}</td>
+                <td>{{kit.colaborador}}</td>
+                <td>{{kit.data}}</td>
+            </tr>
+        {%endfor%}
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="emprest">
+        <h3>Emprestar Kit</h3>
+        <form action="/emprestar" method="POST">
+            <input type="hidden" name="tipo_formulario" value="kits">
+            <label>Item ID:</label>
+            <br>
+            <input type="number" name="numero" required>
+            <br>
+            <label>Professor:</label>
+            <br>
+            <input type="text" name="usuario" required>
+            <br>
+            <button type="submit">Emprestar</button>
+        </form>
+    </div>
+    <div class="devolucao">
+        <h3>Devolver</h3>
+
+        <form action="/devolver" method="POST">
+            <input type="hidden" name="tipo_formulario" value="kits">
+            <label>Item ID:</label>
+            <br>
+            <input type="number" name="numero" required>
+            <br>
+            <button type="submit">Devolver</button>
+        </form>
+    </div>
+    <div class="add_cartao">
+        <h3>Adicionar novo item</h3>
+        <form action="/adicionar" method="POST">
+            <input type="hidden" name="tipo_formulario" value="kits">
+            <label>ID do Item:</label>
+            <br>
+            <input type="number" name="item_id" required>
+            <br>
+            <label>Nome do Item:</label>
+            <br>
+            <input type="text" name="item_nome" required>
+            <br>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+    <div class="baixa_log">
+        <h3>Baixar Registros de Emprestimos</h3>
+        <form action="/download" method="POST">
+            <input type="hidden" name="tipo_formulario" value="kits">
+            <label for="data_ini">Data Inicio:</label><br>
+            <input type="date" name="data_ini" required>
+            <br>
+            <label for="data_fim">Data Final:</label><br>
+            <input type="date" name="data_fim" required>
+            <br>
+            <button type="submit">Baixar</button>
+
+        </form>
+    </div>
+</body>
+
+</html>

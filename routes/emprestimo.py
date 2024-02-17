@@ -2,7 +2,8 @@ from flask import Blueprint, request, session, flash, redirect
 from datetime import datetime
 
 from models.cartoes import Cartoes
-from models.logs import Logs
+from models.kit_sala import Kit
+from models.logs import Logs, LogsKits
 from untils.formated_datetime import date_now
 from untils.check_login_docorator import precisa_logar
 from config.config import db
@@ -14,10 +15,11 @@ route_emp = Blueprint('emprestar', __name__)
 @precisa_logar
 def emprestar():
     cursor = db.session()
+    tipo_formulario = request.form.get("tipo_formulario")
     numero = request.form["numero"]
     usuario = request.form["usuario"]
     data = date_now()
-    try:
+    if tipo_formulario == "cartao":
         acha_cartao = cursor.query(Cartoes).filter_by(idcartoes=numero).first()
         if acha_cartao:
             if acha_cartao.situacao == "Disponível":
@@ -41,7 +43,30 @@ def emprestar():
                 flash("Cartão já emprestado! Por favor escolha outro cartão!", 'warning')
         else:
             flash("Cartão não cadastrado!", 'warning')
-    except BaseExceptionGroup as e:
-        print(e)
-    
-    return redirect("/home")
+        return redirect("/home")
+    elif tipo_formulario == "kits":
+        acha_cartao = cursor.query(Kit).filter_by(item_id=numero).first()
+        if acha_cartao:
+            if acha_cartao.situacao == "Disponível":
+                acha_cartao.usuarios = usuario
+                acha_cartao.situacao = "Emprestado"
+                acha_cartao.colaborador = session["user"]
+                acha_cartao.data = data
+
+                salva_logs = LogsKits(
+                    item_id=numero,
+                    item_name=acha_cartao.item_name,
+                    usuario=usuario,
+                    data_emprest=date_now(True),
+                    colaborador_empresti=session["user"],
+                    data_devol="",
+                    colaborador_devol="",
+                )
+                cursor.add(salva_logs)
+                cursor.commit()
+                flash("Cartão emprestado com sucesso!", "success")
+            else:
+                flash("Cartão já emprestado! Por favor escolha outro cartão!", 'warning')
+        else:
+            flash("Cartão não cadastrado!", 'warning')
+        return redirect("/kits")

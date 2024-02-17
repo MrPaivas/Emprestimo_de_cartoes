@@ -10,7 +10,8 @@ from routes import (
     route_dev,
     route_down,
     route_logout,
-    route_pass
+    route_pass,
+    route_kits
     )
 
 
@@ -26,6 +27,7 @@ app.register_blueprint(route_dev)
 app.register_blueprint(route_down)
 app.register_blueprint(route_logout)
 app.register_blueprint(route_pass)
+app.register_blueprint(route_kits)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

@@ -10,6 +10,7 @@
 <body>
     <a href="/logout" class="logout"><b> Sair </b></a>
     <a href="/troca-senha" class="troca_senha"><b>Trocar de Senha</b></a>
+    <a href="/kits" class="troca_senha"><b>Emprestar Kit Sala</b></a>
 
         
     
@@ -59,6 +60,7 @@
     <div class="emprest">
         <h3>Emprestar</h3>
         <form action="/emprestar" method="POST">
+            <input type="hidden" name="tipo_formulario" value="cartao">
             <label>Número do Cartão:</label>
             <br>
             <input type="number" name="numero" required>
@@ -74,6 +76,7 @@
         <h3>Devolver</h3>
 
         <form action="/devolver" method="POST">
+            <input type="hidden" name="tipo_formulario" value="cartao">
             <label>Número do Cartão:</label>
             <br>
             <input type="number" name="numero" required>
@@ -84,6 +87,7 @@
     <div class="add_cartao">
         <h3>Adicionar Cartão</h3>
         <form action="/adicionar" method="POST">
+            <input type="hidden" name="tipo_formulario" value="cartao">
             <label>Número do Cartão:</label>
             <br>
             <input type="number" name="numero" required>
@@ -94,7 +98,7 @@
     <div class="baixa_log">
         <h3>Baixar Registros de Emprestimos</h3>
         <form action="/download" method="POST">
-
+            <input type="hidden" name="tipo_formulario" value="cartao">
             <label for="data_ini">Data Inicio:</label><br>
             <input type="date" name="data_ini" required>
             <br>

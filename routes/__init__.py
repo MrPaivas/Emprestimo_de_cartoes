@@ -6,3 +6,4 @@ from .adicionar import route_add
 from .down import route_down
 from .logout import route_logout
 from .troca_de_senha import route_pass
+from .kits import route_kits
